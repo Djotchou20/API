@@ -32,7 +32,10 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Employee::inde');
+$routes->get('/', 'Signup::index');
+$routes->post('success', 'Signup::processSignup');
+$routes->post('signup/processSignup', 'Signup::processSignup');
+$routes->get('success', 'Signup::processSignup');
 
 $routes->resource('employee');
 
@@ -44,8 +47,8 @@ $routes->resource('employee');
 //     $routes->delete('users/(:num)', 'Employee::delete/$1');
 // });
 
-$routes->group('api', ['filter' => 'apiKey'], function (RouteCollectionInterface $routes) {
-            // Add your API routes here
+$routes->group('api', ['filter' => \App\Filters\ApiKeyFilter::class,], function (RouteCollectionInterface $routes) {
+
             $routes->get('employee', 'Employee::index');
             $routes->post('employee', 'Employee::create');
             $routes->get('employee/(:num)', 'Employee::show/$1');

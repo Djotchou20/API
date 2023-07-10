@@ -1,87 +1,80 @@
-<?php namespace App\Controllers;
+<?php 
+
+namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
 use CodeIgniter\API\ResponseTrait;
 use App\Models\EmployeeModel;
-use Config\Database;
+use App\Models\ApiKeyModel;
+// use Config\Database;
 use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\Filter\ApiKeyFilter;
 
 
-use Config\ApiConfig;
+// use Config\ApiConfig;
 
 
 class Employee extends ResourceController
 {
     use ResponseTrait;
 
-    public function before(RequestInterface $request, $arguments = null){
-        $apiKey = $request->getHeaderLine('X-API-Key');
+    // public function postman() {
+
+    //     $request = $this->request->getPost();
+
+    //     $apiKey = $this->request->getHeaderLine('X-API-Key');
+
+    //     $test = $this->is_API($apiKey);
+
         
-        $model = new ApiKeyModel();
-        if (!$model->isApiKeyValid($apiKey)) {
-            $response = service('response');
-            $response->setStatusCode(401);
-            $response->setJSON([
-                'status' => 401,
-                'error' => 'Unauthorized',
-                'message' => 'Invalid API key',
-            ]);
-            return $response;
-        }
-    }
 
-    public function postman() {
+    //     $model = new ApiKeyModel();
 
-        $request = $this->request->getPost();
+    //     $databaseApiKey = $model->getApiKey();
 
-        $apiKey = $this->request->getHeaderLine('X-API-Key');
+    //     if($apiKey == $databaseApiKey) {
 
-        $model = new ApiKeyModel();
+    //         return $this->respond('API key is valid', ResponseInterface::HTTP_OK);
+    //     }
 
-        $databaseApiKey = $model->getApiKey();
+    //     else{
+    //         return $this->respond('Invalid API key', ResponseInterface::HTTP_UNAUTHORIZED);
+        
+    //     }
 
-        if($apiKey == $databaseApiKey) {
-
-            return $this->respond('API key is valid', ResponseInterface::HTTP_OK);
-        }
-
-        else{
-            return $this->respond('Invalid API key', ResponseInterface::HTTP_UNAUTHORIZED);
-        }
-
-    }
+    // }
 
     public function inde()
     {
-        return view('welcome_message');
+        // // $apikey = 'abc123';
+        // $model = new ApikeyModel();
+        // $result = $model->where('apikeys', $apikey)->first();
+        // echo '<pre>';
+        // print_r($result);
+        // die;
+
+        return view('form');
     }
 
     // all users
-    public function index(){
-        
-        $apiKey = $this->request->getHeaderLine('X-API-Key');
-        // echo 'Received API Key: ' . $apiKey;
-        // echo 'Expected API Key: ' . ApiConfig::$apiKey;
-        if (!in_array($apiKey, ApiConfig::$apiKey)) {
-            return $this->failNotFound('Invalid API key');
-        }
-
-        $model = new EmployeeModel();
-        $data['employees'] = $model->orderBy('id', 'ASC')->findAll();
-        return $this->respond($data);
-    }
-
-    // creates a user
-    public function create() {
-
+    public function index(){        
         // $apiKey = $this->request->getHeaderLine('X-API-Key');
-        // echo 'Received API Key: ' . $apiKey;
-        // echo 'Expected API Key: ' . ApiConfig::$apiKey;
-        // if ($apiKey !== ApiConfig::$apiKey) {
+        // if (!in_array($apiKey, ApiConfig::$apiKey)) {
         //     return $this->failNotFound('Invalid API key');
         // }
+            $apiKey = $this->request->getHeaderLine('X-API-Key');
 
-        $model = new EmployeeModel();
+        // $test = $this->is_API($apiKey);
+        // if($test){
+            $model = new EmployeeModel();
+            $data['employees'] = $model->orderBy('id', 'ASC')->findAll();
+            return $this->respond($data);
+        // }
+    }
+ 
+    // creates a user
+    public function create() {
+    $model = new EmployeeModel();
         $data = [
             'name' => $this->request->getVar('name'),
             'email'  => $this->request->getVar('email'),
@@ -145,4 +138,31 @@ class Employee extends ResourceController
             return $this->failNotFound('No employee found');
         }
     }
+    // private function is_API($apiKey) {
+    //     $apimodel = new ApikeyModel();
+
+    //     $result = $apimodel->where('apikeys', $apiKey)->first();
+    //     if($result){
+    //     return true;
+    //     }
+    //     else {
+    //         $response = service('response');
+    //         $response->setStatusCode(401);
+    //         $data = $response->setJSON([
+    //             'status' => 401,
+    //             'error' => 'Unauthorized',
+    //             'message' => 'Invalid API key',
+    //             'apiKey' => $apiKey,
+    //         ]);
+    //         $response->error($data);
+    //         return $response;
+    //         // $response->success(false);
+    //         // return $this->$response(setJSON);
+            
+    //     }
+
+
+
+
+    // }
 }

@@ -67,7 +67,7 @@ class Filters extends BaseConfig
 class AppFilters
 {
     public $aliases = [
-        'apiKey' => \App\Filters\ApiKeyFilter::class,
+        \App\Filters\ApiKeyFilter::class,
     ];
 
     public $globals = [
@@ -75,7 +75,7 @@ class AppFilters
             'apiKey',
         ],
         'after' => [
-            //
+            'apikey'
         ],
     ];
 

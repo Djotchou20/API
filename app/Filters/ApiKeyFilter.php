@@ -5,16 +5,20 @@ namespace App\Filters;
 use CodeIgniter\Filters\FilterInterface;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
+use App\Models\ApikeyModel;
 
 class ApiKeyFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
+        $model = new ApikeyModel();
         $apiKey = $request->getHeaderLine('X-API-Key');
-        $validApiKeys = ['abc123', 'ceba20'];
-        echo 'API Key: ' . $apiKey; 
-
-        if (!in_array($apiKey, $validApiKeys)) {
+        // return $apiKey;
+        $result = $model->where('apikeys', $apiKey)->first();
+        // $validApiKeys = ['abc123', 'ceba20'];
+        // $validApiKeys = $model->where('apikeys', $apikey)->first();
+        // echo 'API Key: ' . $apiKey; 
+        if (!$result) {
             $response = service('response');
             $response->setStatusCode(401);
             $response->setJSON([
@@ -32,3 +36,4 @@ class ApiKeyFilter implements FilterInterface
         // No action needed after the request
     }
 }
+
