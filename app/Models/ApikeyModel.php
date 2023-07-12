@@ -8,7 +8,9 @@ class ApiKeyModel extends Model
 {
     protected $table = 'apikey';
 
-    protected $allowedFields = 'apikeys';
+    protected $primaryKey = 'id';
+
+    protected $allowedFields = ['apikeys', 'name'];
 
     // public function getValidApiKeys()
     // {

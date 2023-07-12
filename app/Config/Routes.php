@@ -32,30 +32,27 @@ $routes->set404Override();
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Signup::index');
-$routes->post('success', 'Signup::processSignup');
-$routes->post('signup/processSignup', 'Signup::processSignup');
-$routes->get('success', 'Signup::processSignup');
 
 $routes->resource('employee');
 
-// $routes->group('api', ['filter' => 'custom'], function ($routes) {
-//     $routes->get('users', 'Employee::index');
-//     $routes->post('users', 'Employee::create');
-//     $routes->get('users/(:num)', 'Employee::show/$1');
-//     $routes->put('users/(:num)', 'Employee::update/$1');
-//     $routes->delete('users/(:num)', 'Employee::delete/$1');
-// });
+$routes->get('/', 'SignupController::index');
+$routes->get('/signup', 'SignupController::index');
+$routes->match(['get', 'post'], 'SignupController/store', 'SignupController::store');
+$routes->match(['get', 'post'], 'SigninController/loginAuth', 'SigninController::loginAuth');
+$routes->get('/signin', 'SigninController::index');
+$routes->get('/profile', 'ProfileController::index',['filter' => 'authGuard']);
+
 
 $routes->group('api', ['filter' => \App\Filters\ApiKeyFilter::class,], function (RouteCollectionInterface $routes) {
 
-            $routes->get('employee', 'Employee::index');
-            $routes->post('employee', 'Employee::create');
-            $routes->get('employee/(:num)', 'Employee::show/$1');
-            $routes->put('employee/(:num)', 'Employee::update/$1');
-            $routes->delete('employee/(:num)', 'Employee::delete/$1');
+    $routes->get('employee', 'Employee::index');
+    $routes->post('employee', 'Employee::create');
+    $routes->get('employee/(:num)', 'Employee::show/$1');
+    $routes->put('employee/(:num)', 'Employee::update/$1');
+    $routes->delete('employee/(:num)', 'Employee::delete/$1');
 });
 
+$routes->post('api/signin' , 'SigninController::loginAuth');
 /*
  * --------------------------------------------------------------------
  * Additional Routing
@@ -73,29 +70,3 @@ if (is_file(APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php')) {
     require APPPATH . 'Config/' . ENVIRONMENT . '/Routes.php';
 }
 
-
-
-
-// class Routes
-// {
-//     public function __construct()
-//     {
-//         $routes = service('routes');
-
-//         // ...
-
-//         $routes->group('api', ['filter' => 'apiKey'], function (RouteCollectionInterface $routes) {
-//             // Add your API routes here
-//             $routes->get('users', 'Employee::index');
-//             $routes->post('users', 'Employee::create');
-//             $routes->get('users/(:num)', 'Employee::show/$1');
-//             $routes->put('users/(:num)', 'Employee::update/$1');
-//             $routes->delete('users/(:num)', 'Employee::delete/$1');
-//         });
-
-//         // ...
-
-//         // Return the routes
-//         return $routes;
-//     }
-// }

@@ -3421,3 +3421,15 @@ in APPPATH\Views\signup_form.php on line 106.
  8 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
  9 FCPATH\index.php(69): CodeIgniter\CodeIgniter->run()
 10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('FCPATH\\index.php')
+CRITICAL - 2023-07-10 17:53:22 --> Undefined variable $userData
+in APPPATH\Views\signup_form.php on line 106.
+ 1 APPPATH\Views\signup_form.php(106): CodeIgniter\Debug\Exceptions->errorHandler(2, 'Undefined variable $userData', 'APPPATH\\Views\\signup_form.php', 106)
+ 2 SYSTEMPATH\View\View.php(213): include('APPPATH\\Views\\signup_form.php')
+ 3 SYSTEMPATH\View\View.php(216): CodeIgniter\View\View->CodeIgniter\View\{closure}()
+ 4 SYSTEMPATH\Common.php(1184): CodeIgniter\View\View->render('signup_form', [], true)
+ 5 APPPATH\Controllers\Signup.php(13): view('signup_form')
+ 6 SYSTEMPATH\CodeIgniter.php(934): App\Controllers\Signup->index()
+ 7 SYSTEMPATH\CodeIgniter.php(499): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Signup))
+ 8 SYSTEMPATH\CodeIgniter.php(368): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 FCPATH\index.php(69): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Commands\Server\rewrite.php(47): require_once('FCPATH\\index.php')

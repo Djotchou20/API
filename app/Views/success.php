@@ -7,5 +7,6 @@
 </head>
 <body>
     <h1>Registered Successful</h1>
+    <a href="<?php base_url('signup_form') ?>">Return</a>
 </body>
 </html>

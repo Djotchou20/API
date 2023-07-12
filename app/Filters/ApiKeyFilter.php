@@ -13,11 +13,8 @@ class ApiKeyFilter implements FilterInterface
     {
         $model = new ApikeyModel();
         $apiKey = $request->getHeaderLine('X-API-Key');
-        // return $apiKey;
         $result = $model->where('apikeys', $apiKey)->first();
-        // $validApiKeys = ['abc123', 'ceba20'];
-        // $validApiKeys = $model->where('apikeys', $apikey)->first();
-        // echo 'API Key: ' . $apiKey; 
+        
         if (!$result) {
             $response = service('response');
             $response->setStatusCode(401);

@@ -9,6 +9,7 @@ use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
 use App\Filters\ApiKeyFilter;
+use App\Filters\AuthGuard;
 
 class Filters extends BaseConfig
 {
@@ -22,8 +23,9 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'authGuard' => \App\Filters\AuthGuard::class,
     ];
-
+    
     /**
      * List of filter aliases that are always
      * applied before and after every request.
@@ -80,7 +82,6 @@ class AppFilters
     ];
 
     public $filters = [
-        // 'apiKey' => ['before' => ['auth', 'throttle','Emploee/*']],
         'apiKey' => ['before' => ['*']],
     ];
 
