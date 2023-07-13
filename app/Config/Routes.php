@@ -53,6 +53,7 @@ $routes->group('api', ['filter' => \App\Filters\ApiKeyFilter::class,], function 
 });
 
 $routes->post('api/signin' , 'SigninController::loginAuth');
+$routes->post('api/signup' , 'SignupController::store');
 /*
  * --------------------------------------------------------------------
  * Additional Routing
